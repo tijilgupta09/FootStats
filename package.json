@@ -1,0 +1,25 @@
+{
+  "name": "footstats",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Real-Time Football Score, Analytics, News & AI Predictive Platform",
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "db:migrate": "pnpm --filter @footstats/db migrate",
+    "db:seed": "pnpm --filter @footstats/db seed",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "clean": "turbo run clean"
+  },
+  "devDependencies": {
+    "turbo": "^2.3.0",
+    "typescript": "^5.7.0"
+  },
+  "packageManager": "pnpm@9.15.0",
+  "engines": {
+    "node": ">=22.0.0",
+    "pnpm": ">=9.0.0"
+  }
+}

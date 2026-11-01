@@ -1,0 +1,33 @@
+{
+  "name": "@footstats/api-gateway",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "clean": "rimraf dist"
+  },
+  "dependencies": {
+    "@footstats/db": "workspace:*",
+    "@footstats/shared-types": "workspace:*",
+    "fastify": "^5.2.0",
+    "@fastify/cors": "^10.0.0",
+    "@fastify/websocket": "^11.0.0",
+    "socket.io": "^4.8.0",
+    "ioredis": "^5.4.0",
+    "bullmq": "^5.30.0",
+    "kafkajs": "^2.2.0",
+    "dotenv": "^16.4.0",
+    "zod": "^3.24.0",
+    "xxhash-wasm": "^1.1.0",
+    "pino": "^9.6.0",
+    "pino-pretty": "^13.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "typescript": "^5.7.0",
+    "tsx": "^4.19.0",
+    "rimraf": "^6.0.0"
+  }
+}
