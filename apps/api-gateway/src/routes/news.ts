@@ -155,7 +155,7 @@ export async function searchRoutes(app: FastifyInstance): Promise<void> {
         ...(competitions as Record<string, unknown>[]).map((r) => ({ type: 'COMPETITION', ...r })),
         ...(teams as Record<string, unknown>[]).map((r) => ({ type: 'TEAM', ...r })),
         ...(players as Record<string, unknown>[]).map((r) => ({ type: 'PLAYER', ...r })),
-      ].sort((a, b) => (b['score'] as number) - (a['score'] as number))
+      ].sort((a: any, b: any) => (Number(b.score) || 0) - (Number(a.score) || 0))
        .slice(0, limit);
 
       const processingTimeMs = Date.now() - startTime;

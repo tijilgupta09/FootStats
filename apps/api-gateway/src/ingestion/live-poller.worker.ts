@@ -68,10 +68,10 @@ export async function startLivePollerWorker(
   );
 
   worker.on('completed', (job) => {
-    if (job.returnvalue && (job.returnvalue as Record<string, number>).deltaCount > 0) {
-      const rv = job.returnvalue as Record<string, number>;
+    const rv = job?.returnvalue as Record<string, number> | undefined;
+    if (rv && (rv['deltaCount'] ?? 0) > 0) {
       console.log(
-        `[LivePoller] ✓ Poll #${job.id}: ${rv.totalMatches} matches, ${rv.deltaCount} deltas detected`,
+        `[LivePoller] ✓ Poll #${job?.id}: ${rv['totalMatches']} matches, ${rv['deltaCount']} deltas detected`,
       );
     }
   });

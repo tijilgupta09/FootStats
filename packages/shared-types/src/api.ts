@@ -11,8 +11,6 @@ import type {
   StandingRow,
   NewsArticle,
   Competition,
-  Team,
-  Player,
   HeadToHead,
   ProbabilityTick,
 } from './entities';

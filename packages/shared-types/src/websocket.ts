@@ -58,39 +58,10 @@ export const QueueNames = {
 
 export type QueueName = (typeof QueueNames)[keyof typeof QueueNames];
 
-// ─── Socket.io Typed Event Interfaces ───────────────────────
+// ─── Flash Banner Push Payload (rich websocket push format) ─
 
-/** Payload for score/status updates on the global dashboard ticker */
-export interface DashboardDelta {
-  type: 'SCORE_UPDATE' | 'STATUS_CHANGE' | 'EVENT_FLASH';
-  matchId: string;
-  data: {
-    homeScore?: number;
-    awayScore?: number;
-    status?: string;
-    minute?: number;
-    addedTime?: number;
-    flash?: {
-      type: 'GOAL' | 'RED_CARD' | 'PENALTY' | 'VAR';
-      teamSide: 'home' | 'away';
-      playerName?: string;
-      message: string;
-      ttl: number;
-    };
-  };
-  version: number;
-  timestamp: string;
-}
-
-/** Connection info sent when a client first connects */
-export interface ConnectionInfo {
-  socketId: string;
-  subscribedRooms: string[];
-  serverTime: string;
-  liveMatchCount: number;
-}
-
-/** Flash banner payload for dramatic events (goals, red cards) */
+/** Extended flash banner payload sent over Redis pub/sub from the live poller.
+ *  Includes team context for display in the dashboard without extra DB queries. */
 export interface FlashBannerPayload {
   matchId: string;
   flashType: 'GOAL' | 'RED_CARD' | 'PENALTY' | 'VAR';
@@ -105,27 +76,3 @@ export interface FlashBannerPayload {
   competition: string;
 }
 
-// ─── Client → Server Events ─────────────────────────────────
-
-export interface ClientSocketEvents {
-  'subscribe:dashboard': () => void;
-  'unsubscribe:dashboard': () => void;
-  'subscribe:match': (payload: { matchId: string }) => void;
-  'unsubscribe:match': (payload: { matchId: string }) => void;
-  'subscribe:competition': (payload: { competitionId: string }) => void;
-  'unsubscribe:competition': (payload: { competitionId: string }) => void;
-}
-
-// ─── Server → Client Events ─────────────────────────────────
-
-export interface ServerSocketEvents {
-  'connection:info': (info: ConnectionInfo) => void;
-  'dashboard:delta': (delta: DashboardDelta) => void;
-  'flash:banner': (payload: FlashBannerPayload) => void;
-  'match:event': (data: Record<string, unknown>) => void;
-  'match:stats': (data: Record<string, unknown>) => void;
-  'match:status': (data: Record<string, unknown>) => void;
-  'match:lineup': (data: Record<string, unknown>) => void;
-  'match:prediction': (data: Record<string, unknown>) => void;
-  'match:standings': (data: Record<string, unknown>) => void;
-}

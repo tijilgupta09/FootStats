@@ -2,13 +2,19 @@
   "name": "@footstats/db",
   "version": "1.0.0",
   "private": true,
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
-    "migrate": "node dist/migrate.js",
-    "seed": "node dist/seed.js",
+    "migrate": "tsx src/migrate.ts",
+    "seed": "tsx src/seed.ts",
     "clean": "rimraf dist"
   },
   "dependencies": {
@@ -20,6 +26,8 @@
   "devDependencies": {
     "@types/pg": "^8.11.0",
     "typescript": "^5.7.0",
+    "tsx": "^4.19.0",
     "rimraf": "^6.0.0"
   }
 }
+

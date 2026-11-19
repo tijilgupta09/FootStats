@@ -11,7 +11,7 @@
 //
 
 import 'dotenv/config';
-import { getPool, query, transaction, closePool } from './connection';
+import { transaction, closePool } from './connection';
 
 // ─── Seed Data ──────────────────────────────────────────────
 
@@ -238,9 +238,9 @@ async function seed(): Promise<void> {
         if (!teamId) continue;
 
         await client.query(
-          `INSERT INTO standings (competition_id, season_id, team_id, position, points)
-           VALUES ($1, $2, $3, $4, 0)
-           ON CONFLICT (competition_id, season_id, group_name, team_id) DO NOTHING`,
+          `INSERT INTO standings (competition_id, season_id, group_name, team_id, position, points)
+           VALUES ($1, $2, '', $3, $4, 0)
+           ON CONFLICT (competition_id, season_id, COALESCE(group_name, ''), team_id) DO NOTHING`,
           [compId, seasonId, teamId, i + 1],
         );
       }

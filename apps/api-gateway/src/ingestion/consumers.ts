@@ -223,12 +223,12 @@ async function handleStandingsUpdate(payload: EachMessagePayload): Promise<void>
       for (const row of data.standings) {
         await client.query(
           `INSERT INTO standings (
-            competition_id, season_id, team_id,
+            competition_id, season_id, group_name, team_id,
             position, played, won, drawn, lost,
             goals_for, goals_against, points, form,
             updated_at
-          ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, NOW())
-          ON CONFLICT (competition_id, season_id, group_name, team_id)
+          ) VALUES ($1, $2, '', $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, NOW())
+          ON CONFLICT (competition_id, season_id, COALESCE(group_name, ''), team_id)
           DO UPDATE SET
             position = EXCLUDED.position,
             played = EXCLUDED.played,
